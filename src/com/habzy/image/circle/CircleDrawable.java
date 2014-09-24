@@ -27,13 +27,12 @@ public class CircleDrawable extends Drawable {
 
     private static final String TAG = CircleDrawable.class.getName();
 
-    private final RectF mDrawableRect = new RectF();
     private final RectF mBitmapRect = new RectF();
     private final BitmapShader mBitmapShader;
     private final Paint mBitmapPaint;
     private final int mBitmapWidth;
     private final int mBitmapHeight;
-    private final int mRadius;
+    private float mRadius;
     private final Paint mBorderPaint;
     private final Matrix mShaderMatrix = new Matrix();
 
@@ -184,10 +183,11 @@ public class CircleDrawable extends Drawable {
 
     @Override
     public void draw(Canvas canvas) {
-        float borderRadius = 0;
+        Log.d(TAG, "=========");
+        Log.d(TAG, "======mBorderWidth:"+mBorderWidth+"   mRadius:"+mRadius);
         if (mBorderWidth > 0) {
-            borderRadius = mBorderWidth + mRadius;
-            canvas.drawCircle(mBitmapWidth / 2, mBitmapHeight / 2, borderRadius, mBorderPaint);
+            mRadius = mRadius - mBorderWidth;
+            canvas.drawCircle(mBitmapWidth / 2, mBitmapHeight / 2, mRadius, mBorderPaint);
             canvas.drawCircle(mBitmapWidth / 2, mBitmapHeight / 2, mRadius, mBitmapPaint);
         } else {
             canvas.drawCircle(mBitmapWidth / 2, mBitmapHeight / 2, mRadius, mBitmapPaint);

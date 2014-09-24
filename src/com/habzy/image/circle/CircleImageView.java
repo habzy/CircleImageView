@@ -12,11 +12,12 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ImageView;
 
 public class CircleImageView extends ImageView {
 
-    public static final String TAG = "RoundedImageView";
+    public static final String TAG = "CircleImageView";
     public static final int DEFAULT_RADIUS = 0;
     public static final int DEFAULT_BORDER_WIDTH = 0;
     private int mBorderWidth = DEFAULT_BORDER_WIDTH;
@@ -39,11 +40,14 @@ public class CircleImageView extends ImageView {
 
         mBorderWidth = a.getDimensionPixelSize(R.styleable.CircleImageView_width_border, -1);
 
+        Log.d(TAG, "======mBorderWidth:"+mBorderWidth);
         if (mBorderWidth < 0) {
             mBorderWidth = DEFAULT_BORDER_WIDTH;
         }
 
         mBorderColor = a.getColorStateList(R.styleable.CircleImageView_color_border);
+        Log.d(TAG, "======mBorderColor:"+mBorderColor);
+
         if (mBorderColor == null) {
             mBorderColor = ColorStateList.valueOf(CircleDrawable.DEFAULT_BORDER_COLOR);
         }
