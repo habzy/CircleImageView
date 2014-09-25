@@ -1,7 +1,7 @@
 /**
- * 
+ *
  * Copyright habzyhs@gmail.com
- * 
+ *
  * Take reference from [RoundedImageView](https://github.com/habzy/RoundedImageView)
  */
 package com.habzy.image.circle;
@@ -17,10 +17,9 @@ import android.widget.ImageView;
 
 public class CircleImageView extends ImageView {
 
-    public static final String TAG = "CircleImageView";
-    public static final int DEFAULT_RADIUS = 0;
-    public static final int DEFAULT_BORDER_WIDTH = 0;
-    private int mBorderWidth = DEFAULT_BORDER_WIDTH;
+    private static final String TAG = "CircleImageView";
+
+    private int mBorderWidth = 0;
     private ColorStateList mBorderColor = ColorStateList
             .valueOf(CircleDrawable.DEFAULT_BORDER_COLOR);
 
@@ -37,17 +36,12 @@ public class CircleImageView extends ImageView {
         TypedArray a =
                 context.obtainStyledAttributes(attrs, R.styleable.CircleImageView, defStyle, 0);
 
-
         mBorderWidth = a.getDimensionPixelSize(R.styleable.CircleImageView_width_border, -1);
-
-        Log.d(TAG, "======mBorderWidth:"+mBorderWidth);
         if (mBorderWidth < 0) {
-            mBorderWidth = DEFAULT_BORDER_WIDTH;
+            mBorderWidth = 0;
         }
 
         mBorderColor = a.getColorStateList(R.styleable.CircleImageView_color_border);
-        Log.d(TAG, "======mBorderColor:"+mBorderColor);
-
         if (mBorderColor == null) {
             mBorderColor = ColorStateList.valueOf(CircleDrawable.DEFAULT_BORDER_COLOR);
         }
@@ -69,6 +63,7 @@ public class CircleImageView extends ImageView {
 
     private void updateAttrs(Drawable drawable, boolean background) {
         if (drawable == null) {
+            Log.w(TAG, "No content to be drawn");
             return;
         }
 

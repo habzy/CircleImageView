@@ -1,6 +1,10 @@
+/**
+ *
+ * Copyright habzyhs@gmail.com
+ *
+ * Take reference from [RoundedImageView](https://github.com/habzy/RoundedImageView)
+ */
 package com.habzy.image.circle;
-
-
 
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
@@ -8,10 +12,8 @@ import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
-import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.Bitmap.Config;
 import android.graphics.drawable.BitmapDrawable;
@@ -19,38 +21,32 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.util.Log;
 
-/**
- * @author Habzy Huang
- * 
- */
 public class CircleDrawable extends Drawable {
 
     private static final String TAG = CircleDrawable.class.getName();
 
-    private final RectF mBitmapRect = new RectF();
+    public static final int DEFAULT_BORDER_COLOR = Color.BLACK;
+
     private final BitmapShader mBitmapShader;
     private final Paint mBitmapPaint;
     private final int mBitmapWidth;
     private final int mBitmapHeight;
     private float mRadius;
-    private final Paint mBorderPaint;
-    private final Matrix mShaderMatrix = new Matrix();
 
+    /**
+     * The border
+     */
     private float mBorderWidth = 0;
     private ColorStateList mBorderColor = ColorStateList.valueOf(DEFAULT_BORDER_COLOR);
-
-    public static final int DEFAULT_BORDER_COLOR = Color.BLACK;
+    private final Paint mBorderPaint;
 
     public CircleDrawable(Bitmap bitmap) {
 
         mBitmapWidth = bitmap.getWidth();
         mBitmapHeight = bitmap.getHeight();
-        mBitmapRect.set(0, 0, mBitmapWidth, mBitmapHeight);
-
         mRadius = mBitmapWidth < mBitmapHeight ? mBitmapWidth / 2 : mBitmapHeight / 2;
 
         mBitmapShader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-        mBitmapShader.setLocalMatrix(mShaderMatrix);
 
         mBitmapPaint = new Paint();
         mBitmapPaint.setStyle(Paint.Style.FILL);
@@ -183,8 +179,6 @@ public class CircleDrawable extends Drawable {
 
     @Override
     public void draw(Canvas canvas) {
-        Log.d(TAG, "=========");
-        Log.d(TAG, "======mBorderWidth:"+mBorderWidth+"   mRadius:"+mRadius);
         if (mBorderWidth > 0) {
             mRadius = mRadius - mBorderWidth;
             canvas.drawCircle(mBitmapWidth / 2, mBitmapHeight / 2, mRadius, mBorderPaint);
